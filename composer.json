@@ -5,8 +5,18 @@
         "php": "^5.3.3 || ^7.0"
     },
     "autoload": {
-        "files": [
-            "parser.php"
-        ]
-    }
+        "psr-4": {
+           "NameParser\\": "src/"
+       }
+    },
+    "autoload-dev": {
+       "psr-4": {
+           "NameParser\\Test\\": "tests/"
+       }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
