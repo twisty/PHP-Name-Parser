@@ -15,7 +15,7 @@ class FullNameParserTest extends TestBase
 
 
     /**
-     * @dataProvider functionalNameProvider
+     * @dataProvider functionalOneNameProvider
      */
     public function testName($name, $expected_result)
     {
@@ -25,17 +25,211 @@ class FullNameParserTest extends TestBase
     }
 
 
+    public function functionalOneNameProvider()
+    {
+        return array(
+            array(
+                "Alejandro Hernandez Amaya",
+                array(
+                    "full_name" => "Alejandro Hernandez Amaya",
+                    "prefix"    => "",
+                    "fname"     => "Alejandro",
+                    "mname"     => "Hernandez",
+                    "lname"     => "Amaya",
+                    "suffix"    => ""
+                )
+            ),
+            array(
+                "Gerardo De Los Ang Camacho III",
+                array(
+                    "full_name" => "Gerardo De Los Ang Camacho III",
+                    "prefix"    => "",
+                    "fname"     => "Gerardo",
+                    "mname"     => "",
+                    "lname"     => "De Los Ang Camacho",
+                    "suffix"    => "III"
+                )
+            ),
+            array(
+                "Erich von Stroheim",
+                array(
+                    "full_name" => "Erich von Stroheim",
+                    "prefix"    => "",
+                    "fname"     => "Erich",
+                    "mname"     => "",
+                    "lname"     => "Von Stroheim",
+                    "suffix"    => ""
+                )
+            ),
+            array(
+                "Manuel De Jesus Van Halen Jr",
+                array(
+                    "full_name" => "Manuel De Jesus Van Halen Jr",
+                    "prefix"    => "",
+                    "fname"     => "Manuel",
+                    "mname"     => "",
+                    "lname"     => "De Jesus Van Halen",
+                    "suffix"    => "Jr"
+                )
+            ),
+            array(
+                "Manuel De Jesus Balam Jr",
+                array(
+                    "full_name" => "Manuel De Jesus Balam Jr",
+                    "prefix"    => "",
+                    "fname"     => "Manuel",
+                    "mname"     => "",
+                    "lname"     => "De Jesus Balam",
+                    "suffix"    => "Jr"
+                )
+            ),
+            array(
+                "Carol Frances Ma Molloy",
+                array(
+                    "full_name" => "Carol Frances Ma Molloy",
+                    "prefix"    => "",
+                    "fname"     => "",
+                    "mname"     => "",
+                    "lname"     => "",
+                    "suffix"    => ""
+                )
+            ),
+            array(
+                "Coral Del Mar Lopez Rosario",
+                array(
+                    "full_name" => "Coral Del Mar Lopez Rosario",
+                    "prefix"    => "",
+                    "fname"     => "Coral",
+                    "mname"     => "",
+                    "lname"     => "Del Mar Lopez Rosario",
+                    "suffix"    => ""
+                )
+            ),
+            array(
+                "Roberta R. W. Kameda",
+                array(
+                    "full_name" => "Roberta R. W. Kameda",
+                    "prefix"    => "",
+                    "fname"     => "Roberta",
+                    "mname"     => "R. W.",
+                    "lname"     => "Kameda",
+                    "suffix"    => ""
+                )
+            ),
+        );
+    }
+
+
     public function functionalNameProvider()
     {
         return array(
+                        array(
+                "Gerardo De Los Ang Camacho III",
+                array(
+                    "full_name" => "Gerardo De Los Ang Camacho III",
+                    "prefix"    => "",
+                    "fname"     => "Gerardo",
+                    "mname"     => "De Los Ang",
+                    "lname"     => "Camacho",
+                    "suffix"    => "III"
+                )
+            ),
+            array(
+                "Erich von Stroheim",
+                array(
+                    "full_name" => "Erich von Stroheim",
+                    "prefix"    => "",
+                    "fname"     => "Erich",
+                    "mname"     => "",
+                    "lname"     => "Von Stroheim",
+                    "suffix"    => ""
+                )
+            ),
+            array(
+                "Manuel De Jesus Van Halen Jr",
+                array(
+                    "full_name" => "Manuel De Jesus Van Halen Jr",
+                    "prefix"    => "",
+                    "fname"     => "Manuel",
+                    "mname"     => "De Jesus",
+                    "lname"     => "Van Halen",
+                    "suffix"    => "Jr"
+                )
+            ),
+            array(
+                "Manuel De Jesus Balam Jr",
+                array(
+                    "full_name" => "Manuel De Jesus Balam Jr",
+                    "prefix"    => "",
+                    "fname"     => "Manuel",
+                    "mname"     => "De Jesus",
+                    "lname"     => "Balam",
+                    "suffix"    => "Jr"
+                )
+            ),
+            array(
+                "Carol Frances Ma Molloy",
+                array(
+                    "full_name" => "Carol Frances Ma Molloy",
+                    "prefix"    => "",
+                    "fname"     => "",
+                    "mname"     => "",
+                    "lname"     => "",
+                    "suffix"    => ""
+                )
+            ),
+            array(
+                "Coral Del Mar Lopez Rosario",
+                array(
+                    "full_name" => "Coral Del Mar Lopez Rosario",
+                    "prefix"    => "",
+                    "fname"     => "",
+                    "mname"     => "",
+                    "lname"     => "",
+                    "suffix"    => ""
+                )
+            ),
+            array(
+                "Roberta R. W. Kameda",
+                array(
+                    "full_name" => "Roberta R. W. Kameda",
+                    "prefix"    => "",
+                    "fname"     => "Roberta",
+                    "mname"     => "R. W.",
+                    "lname"     => "Kameda",
+                    "suffix"    => ""
+                )
+            ),
+            array(
+                "Gemma De Lemos Mondala",
+                array(
+                    "full_name" => "Gemma De Lemos Mondala",
+                    "prefix"    => "",
+                    "fname"     => "Gemma",
+                    "mname"     => "De Lemos",
+                    "lname"     => "Mondala",
+                    "suffix"    => "",
+                )
+            ),
+            array(
+                "Gerardo De Los Ang Camacho III",
+                array(
+                    "full_name" => "Gerardo De Los Ang Camacho III",
+                    "prefix"    => "",
+                    "fname"     => "Gerardo",
+                    "mname"     => "De Los Ang",
+                    "lname"     => "Camacho",
+                    "suffix"    => "III"
+                )
+            ),
             array(
                 "Roberta R.W. Kameda",
                 array(
                     "full_name" => "Roberta R.W. Kameda",
                     "prefix"    => "",
-                    "fname"     => "Roberta",
-                    "mname"     => "R.W",
-                    "lname"     => "Kameda",
+                    "fname"     => "",
+                    "mname"     => "",
+                    "lname"     => "",
                     "suffix"    => ""
                 )
             ),
@@ -436,13 +630,13 @@ class FullNameParserTest extends TestBase
                 )
             ),
             array(
-                "The Rev. Mark Williams",
+                "Rev. Mark Williams",
                 array(
-                    "full_name" => "The Rev. Mark Williams",
-                    "prefix"    => "",
-                    "fname"     => "",
+                    "full_name" => "Rev. Mark Williams",
+                    "prefix"    => "Rev.",
+                    "fname"     => "Mark",
                     "mname"     => "",
-                    "lname"     => "",
+                    "lname"     => "Williams",
                     "suffix"    => ""
                 )
             ),

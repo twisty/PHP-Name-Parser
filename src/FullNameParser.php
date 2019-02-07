@@ -99,7 +99,7 @@ class FullNameParser
             'Doc.' => array('associate professor'),
             ' ' => array('the')
         ),
-        'compound' => array('da','de','del','della', 'dem', 'den', 'der','di','du', 'het', 'la', 'onder', 'op', 'pietro','st.','st','\'t', 'ten', 'ter','van','vanden','vere','von'),
+        'compound' => array('da','de','del','della', 'dem', 'den', 'der','di','du', 'het', 'la', 'los', 'onder', 'op', 'pietro','st.','st','\'t', 'ten', 'ter','van','vanden','vere','von'),
         'suffixes' => array(
           'line' => array('I','II','III','IV','V','1st','2nd','3rd','4th','5th','Senior','Junior','Jr','Sr'),
           'prof' => array('AO', 'B.A.', 'M.Sc', 'BCompt', 'PhD', 'Ph.D.','APR','RPh','PE','MD', 'M.D.', 'MA','DMD','CME', 'BSc', 'Bsc', 'BSc(hons)', 'Ph.D.', 'BEng', 'M.B.A.', 'MBA', 'FAICD', 'CM', 'OBC', 'M.B.', 'ChB', 'FRCP', 'FRSC',
@@ -119,10 +119,9 @@ class FullNameParser
         ),
         'vowels' => array('a','e','i','o','u')
     );
-    
+
     protected $not_nicknames = array("(hons)");
-    
-    
+
     /**
      * Parse Static entry point.
      *
@@ -134,8 +133,7 @@ class FullNameParser
         $parser = new self();
         return $parser->parse_name($name);
     }
-    
-    
+
     /**
      * This is the primary method which calls all other methods
      *
@@ -149,14 +147,21 @@ class FullNameParser
         $unparsed_name = $full_name;
 
         # Setup default vars
-        $prefix     = '';
-        $fname          = '';
-        $initials       = '';
-        $lname          = '';
-        $suffix         = '';
+        $prefix   = '';
+        $first_name    = '';
+        $middle_name = '';
+        $last_name    = '';
+        $suffix   = '';
 
-        $name = $this->format_name($full_name, $prefix, $fname, $initials, $lname, $suffix);
+        $name = $this->format_name($full_name, $prefix, $first_name, $middle_name, $last_name, $suffix);
 
+        # If nickname then it's hard to parse other stuff
+        if ($this->get_nickname($full_name)) {
+            # Hard to parse
+            return $name;
+        }
+
+        $unfiltered_name_parts = $this->break_words($full_name);
         # Find all the professional suffixes possible
         $professional_suffix = $this->get_pro_suffix($full_name);
 
@@ -165,7 +170,6 @@ class FullNameParser
         foreach ($professional_suffix as $key => $psx) {
             $start = mb_strpos($full_name, $psx);
             if ($start === FALSE) {
-                echo "ASSERT ERROR, the professional suffix:" . $psx . " cannot be found in the full name:" . $full_name . "<br>";
                 continue;
             }
             if ($start < $first_suffix_index) {
@@ -173,15 +177,18 @@ class FullNameParser
             }
         }
 
-        // everything to the right of the first professional suffix is part of the suffix
-        $suffix = mb_substr($full_name, $first_suffix_index);
+        if (count($professional_suffix)) {
+            $real_suffix = $this->check_next_words($full_name, $first_suffix_index);
+            if ($real_suffix) {
+                // everything to the right of the first professional suffix is part of the suffix
+                $suffix = mb_substr($full_name, $first_suffix_index);
 
-        // remove the suffixes from the full_name
-        $full_name = mb_substr($full_name, 0, $first_suffix_index);
-
-        # If nickname then it's hard to parse other stuff
-        if ($this->get_nickname($full_name)) {
-            return $name;
+                // remove the suffixes from the full_name
+                $full_name = mb_substr($full_name, 0, $first_suffix_index);
+            } else {
+                # Hard to parse
+                return $this->check_if_three($name, $prefix, $suffix, $unfiltered_name_parts);
+            }
         }
 
         # Grab a list of words from the remainder of the full name
@@ -225,19 +232,20 @@ class FullNameParser
                     # if so, do a look-ahead to see if they go by their middle name
                     # for ex: "R. Jason Smith" => "Jason Smith" & "R." is stored as an initial
                     # but "R. J. Smith" => "R. Smith" and "J." is stored as an middle
-                    $fname .= " " . mb_strtoupper($word);
-                    if ($this->is_initial($unfiltered_name_parts[$i + 1]) && !$fname) {
-                        $fname .= " " . mb_strtoupper($word);
+                    $first_name .= " " . mb_strtoupper($word);
+                    if ($this->is_initial($unfiltered_name_parts[$i + 1]) && !$first_name) {
+                        $first_name .= " " . mb_strtoupper($word);
                     }
                 }
                 # otherwise, just go ahead and save the initial
                 else {
-                    $initials .= " " . mb_strtoupper($word);
+                    $middle_name .= " " . mb_strtoupper($word);
                 }
-            } elseif (!$fname) {
-                $fname .= " " . $this->fix_case($word);
+            } elseif (!$first_name) {
+                $first_name .= " " . $this->fix_case($word);
             } else {
-                return $name;
+                # Hard to parse
+                return $this->check_if_three($name, $prefix, $suffix, $unfiltered_name_parts);
             }
         }
 
@@ -246,17 +254,17 @@ class FullNameParser
             if ($end - 0 > 1) {
                 # concat the last name and split last name in base and compound
                 for ($i; $i < $end; $i++) {
-                    $lname .= " " . $this->fix_case($unfiltered_name_parts[$i]);
+                    $last_name .= " " . $this->fix_case($unfiltered_name_parts[$i]);
                 }
             } else {
                 # otherwise, single word strings are assumed to be first names
-                $fname = $this->fix_case($unfiltered_name_parts[$i]);
+                $first_name = $this->fix_case($unfiltered_name_parts[$i]);
             }
         } else {
-            $fname = "";
+            $first_name = "";
         }
         # return the various parts in an array
-        $name = $this->format_name($unparsed_name, $prefix, trim($fname), trim($initials), trim($lname), $suffix);
+        $name = $this->format_name($unparsed_name, $prefix, trim($first_name), trim($middle_name), trim($last_name), $suffix);
 
         return $name;
     }
@@ -285,7 +293,10 @@ class FullNameParser
             $prefix = trim($prefix);
             // Find if there is a line suffix, if so then move it out
             # Is last word a suffix or multiple suffixes consecutively?
-            while (count($unfiltered_name_parts) > 0 && $s = $this->is_line_suffix($unfiltered_name_parts[count($unfiltered_name_parts) - 1], $full_name)) {
+            while (
+                count($unfiltered_name_parts) > 0
+                && $s = $this->is_line_suffix($unfiltered_name_parts[count($unfiltered_name_parts) - 1], $full_name)
+            ) {
                 if ($suffix != "") {
                     $suffix = $s . ", " . $suffix;
                 } else {
@@ -325,6 +336,24 @@ class FullNameParser
             }
         }
         return $found_suffix_arr;
+    }
+
+    public function check_next_words($full_name, $professional_suffix_index)
+    {
+        $results = [];
+        $supossed_suffix = mb_substr($full_name, $professional_suffix_index);
+        $parts = $this->break_words($supossed_suffix);
+        if (count($parts) === 1) {
+            return true;
+        }
+        foreach ($parts as $key => $word) {
+            if (count($this->get_pro_suffix($word))) {
+                $results[] = true;
+                continue;
+            }
+            $results[] = false;
+        }
+        return !in_array(false, $results);
     }
 
     /**
@@ -455,18 +484,12 @@ class FullNameParser
         return ((mb_strlen($word) == 1) || (mb_strlen($word) == 2 && $word{1} == "."));
     }
 
-    /**
-     * Checks for camelCase words such as McDonald and MacElroy
-     *
-     * @param string $word the single word you wish to test
-     * @return boolean
-     */
-    protected function is_camel_case($word)
+    protected function check_if_three($name, $prefix, $suffix, $parts)
     {
-        if (preg_match('/\p{L}(\p{Lu}*\p{Ll}\p{Ll}*\p{Lu}|\p{Ll}*\p{Lu}\p{Lu}*\p{Ll})\p{L}*/', $word)) {
-            return true;
+        if (count($parts) === 3) {
+            return $this->format_name($name['full_name'], $prefix, trim($parts[0]), trim($parts[1]), trim($parts[2]), $suffix);
         }
-        return false;
+        return $name;
     }
 
     # ucfirst words split by dashes or periods
@@ -526,6 +549,20 @@ class FullNameParser
             $words[] = ($this->is_camel_case($word)) ? $word : $this->mb_ucfirst(mb_strtolower($word));
         }
         return implode($seperator, $words);
+    }
+
+    /**
+     * Checks for camelCase words such as McDonald and MacElroy
+     *
+     * @param string $word the single word you wish to test
+     * @return boolean
+     */
+    protected function is_camel_case($word)
+    {
+        if (preg_match('/\p{L}(\p{Lu}*\p{Ll}\p{Ll}*\p{Lu}|\p{Ll}*\p{Lu}\p{Lu}*\p{Ll})\p{L}*/', $word)) {
+            return true;
+        }
+        return false;
     }
 
     # helper public function for multibytes ctype_alpha
