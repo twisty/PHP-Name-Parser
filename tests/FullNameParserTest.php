@@ -21,7 +21,7 @@ class FullNameParserTest extends TestBase
     {
         $parser = new FullNameParser();
         $split_name = $parser->parse_name($name);
-        $this->assertEquals($split_name, $expected_result, "Failed asserting that " . json_encode($split_name, JSON_PRETTY_PRINT) . PHP_EOL . "Is same as " . json_encode($expected_result, JSON_PRETTY_PRINT));
+        $this->assertEquals($expected_result, $split_name, "Failed asserting that " . json_encode($split_name, JSON_PRETTY_PRINT) . PHP_EOL . "Is same as " . json_encode($expected_result, JSON_PRETTY_PRINT));
     }
 
 
