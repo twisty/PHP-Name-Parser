@@ -174,7 +174,7 @@ class FullNameParser
         # Find all the professional suffixes possible
         $professional_suffix = $this->get_pro_suffix($full_name);
 
-        // The position of the first professional suffix denotes the end of the name and the start of suffixes
+        # The position of the first professional suffix denotes the end of the name and the start of suffixes
         $first_suffix_index = mb_strlen($full_name);
         foreach ($professional_suffix as $pro_suffix) {
             $start = mb_strpos($full_name, $pro_suffix);
@@ -189,10 +189,10 @@ class FullNameParser
         if (count($professional_suffix)) {
             $real_suffix = $this->check_next_words($full_name, $first_suffix_index);
             if ($real_suffix) {
-                // everything to the right of the first professional suffix is part of the suffix
+                # everything to the right of the first professional suffix is part of the suffix
                 $suffix = mb_substr($full_name, $first_suffix_index);
 
-                // remove the suffixes from the full_name
+                # remove the suffixes from the full_name
                 $full_name = mb_substr($full_name, 0, $first_suffix_index);
             } else {
                 # Hard to parse
@@ -205,13 +205,13 @@ class FullNameParser
 
         list($prefix, $suffix, $unfiltered_name_parts) = $this->get_suffix_and_prefix($suffix, $prefix, $unfiltered_name_parts, $full_name);
 
-        // Re-pack the unfiltered name parts array and exclude empty words
+        # Re-pack the unfiltered name parts array and exclude empty words
         $name_parts = [];
         foreach ($unfiltered_name_parts as $name_part) {
             $name_part = trim($name_part);
             $name_part = rtrim($name_part, ',');
             if (mb_strlen($name_part) == '1' && !$this->mb_ctype_alpha($name_part)) {
-                // If any word left is of one character that is not alphabetic then it is not a real word, so remove it
+                # If any word left is of one character that is not alphabetic then it is not a real word, so remove it
                 $name_part = "";
             }
             if (mb_strlen(trim($name_part))) {
@@ -250,20 +250,36 @@ class FullNameParser
                 }
             } elseif (!$first_name) {
                 $first_name .= " " . $this->fix_case($word);
+            }
+            # If not an initial and a first name was set, then this should be the middle name.
+            elseif (!$middle_name) {
+                $middle_name .= " " . $this->fix_case($word);
             } else {
                 # Hard to parse
                 return $this->check_if_three($name, $prefix, $suffix, $unfiltered_name_parts);
             }
         }
-        // Resets the index number
+        # Resets the index number
         $unfiltered_name_parts = array_values($unfiltered_name_parts);
         $end = count($unfiltered_name_parts);
+        $last_name_set = false;
         if (count($unfiltered_name_parts)) {
             # check that we have more than 1 word in our string
             if ($end > 1) {
                 # concat the last name and split last name in base and compound
                 for ($index; $index < $end; $index++) {
-                    $last_name .= " " . $this->fix_case($unfiltered_name_parts[$index]);
+                    $word = $unfiltered_name_parts[$index];
+                    # Check if we have a compound, we can have many of them as long as a normal word appears
+                    if ($this->is_compound($word)) {
+                        $last_name .= " " . $this->fix_case($word);
+                    } elseif (!$last_name_set) {
+                        $last_name .= " " . $this->fix_case($word);
+                        $last_name_set = true;
+                    } else {
+                        # hard to parse
+                        return $this->check_if_three($name, $prefix, $suffix, $unfiltered_name_parts);
+                    }
+                    # $last_name .= " " . $this->fix_case($word);
                 }
             } else {
                 # otherwise, single word strings are assumed to be first names

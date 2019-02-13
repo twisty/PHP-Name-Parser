@@ -57,7 +57,7 @@ class Runner
             $output[] = implode(', ', array_values($format_name));
         }
 
-        $this->write_csv($this->special_output, $outputname, $special_output);
+        // $this->write_csv($this->special_output, $outputname, $special_output);
         $this->write_csv($this->output, $outputname, $output);
     }
 

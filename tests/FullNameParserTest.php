@@ -21,691 +21,178 @@ class FullNameParserTest extends TestBase
     {
         $parser = new FullNameParser();
         $split_name = $parser->parse_name($name);
-        $this->assertEquals($expected_result, $split_name, "Failed asserting that " . json_encode($split_name, JSON_PRETTY_PRINT) . PHP_EOL . "Is same as " . json_encode($expected_result, JSON_PRETTY_PRINT));
+        $this->assertEquals($expected_result, $split_name, "Failed asserting that " . json_encode($expected_result, JSON_PRETTY_PRINT) . PHP_EOL . "Is same as " . json_encode($split_name, JSON_PRETTY_PRINT));
     }
 
 
     public function functionalOneNameProvider()
     {
-        return array(
-            array(
-                "Alejandro Hernandez Amaya",
-                array(
-                    "full_name" => "Alejandro Hernandez Amaya",
+        return [
+            [
+                "Marc Jeffrey Del DelPiero",
+                [
+                    "full_name" => "Marc Jeffrey Del DelPiero",
+                    "prefix"    => "",
+                    "fname"     => "Marc",
+                    "mname"     => "Jeffrey",
+                    "lname"     => "Del DelPiero",
+                    "suffix"    => ""
+                ]
+            ],
+            [
+                "Alyssa Ruiz De Esparza",
+                [
+                    "full_name" => "Alyssa Ruiz De Esparza",
+                    "prefix"    => "",
+                    "fname"     => "Alyssa",
+                    "mname"     => "Ruiz",
+                    "lname"     => "De Esparza",
+                    "suffix"    => ""
+                ]
+            ],
+            [
+                "Joseph Edward A. Connell Jr",
+                [
+                    "full_name" => "Joseph Edward A. Connell Jr",
+                    "prefix"    => "",
+                    "fname"     => "Joseph",
+                    "mname"     => "Edward A.",
+                    "lname"     => "Connell",
+                    "suffix"    => "Jr"
+                ]
+            ],
+            [
+                "Allyson De Guzman Jr.",
+                [
+                    "full_name" => "Allyson De Guzman Jr.",
+                    "prefix"    => "",
+                    "fname"     => "Allyson",
+                    "mname"     => "",
+                    "lname"     => "De Guzman",
+                    "suffix"    => "Jr"
+                ]
+            ],
+            [
+                "Julie Del V Catancio",
+                [
+                    "full_name" => "Julie Del V Catancio",
+                    "prefix"    => "",
+                    "fname"     => "",
+                    "mname"     => "",
+                    "lname"     => "",
+                    "suffix"    => ""
+                ]
+            ],
+            [
+                "Alejandro Fernandez Catan",
+                [
+                    "full_name" => "Alejandro Fernandez Catan",
                     "prefix"    => "",
                     "fname"     => "Alejandro",
-                    "mname"     => "Hernandez",
-                    "lname"     => "Amaya",
+                    "mname"     => "Fernandez",
+                    "lname"     => "Catan",
                     "suffix"    => ""
-                )
-            ),
-            array(
+                ]
+            ],
+            [
+                "Alejandro Los Fernandez Jr.",
+                [
+                    "full_name" => "Alejandro Los Fernandez Jr.",
+                    "prefix"    => "",
+                    "fname"     => "Alejandro",
+                    "mname"     => "",
+                    "lname"     => "Los Fernandez",
+                    "suffix"    => "Jr"
+                ]
+            ],
+            [
                 "Gerardo De Los Ang Camacho III",
-                array(
+                [
                     "full_name" => "Gerardo De Los Ang Camacho III",
+                    "prefix"    => "",
+                    "fname"     => "",
+                    "mname"     => "",
+                    "lname"     => "",
+                    "suffix"    => ""
+                ]
+            ],
+            [
+                "Gerardo De Los Angeles III",
+                [
+                    "full_name" => "Gerardo De Los Angeles III",
                     "prefix"    => "",
                     "fname"     => "Gerardo",
                     "mname"     => "",
-                    "lname"     => "De Los Ang Camacho",
+                    "lname"     => "De Los Angeles",
                     "suffix"    => "III"
-                )
-            ),
-            array(
+                ]
+            ],
+            [
                 "Erich von Stroheim",
-                array(
+                [
                     "full_name" => "Erich von Stroheim",
                     "prefix"    => "",
                     "fname"     => "Erich",
                     "mname"     => "",
                     "lname"     => "Von Stroheim",
                     "suffix"    => ""
-                )
-            ),
-            array(
+                ]
+            ],
+            [
                 "Manuel De Jesus Van Halen Jr",
-                array(
+                [
                     "full_name" => "Manuel De Jesus Van Halen Jr",
                     "prefix"    => "",
-                    "fname"     => "Manuel",
+                    "fname"     => "",
                     "mname"     => "",
-                    "lname"     => "De Jesus Van Halen",
-                    "suffix"    => "Jr"
-                )
-            ),
-            array(
+                    "lname"     => "",
+                    "suffix"    => ""
+                ]
+            ],
+            [
                 "Manuel De Jesus Balam Jr",
-                array(
+                [
                     "full_name" => "Manuel De Jesus Balam Jr",
                     "prefix"    => "",
-                    "fname"     => "Manuel",
+                    "fname"     => "",
                     "mname"     => "",
-                    "lname"     => "De Jesus Balam",
-                    "suffix"    => "Jr"
-                )
-            ),
-            array(
+                    "lname"     => "",
+                    "suffix"    => ""
+                ]
+            ],
+            [
                 "Carol Frances Ma Molloy",
-                array(
+                [
                     "full_name" => "Carol Frances Ma Molloy",
                     "prefix"    => "",
                     "fname"     => "",
                     "mname"     => "",
                     "lname"     => "",
                     "suffix"    => ""
-                )
-            ),
-            array(
+                ]
+            ],
+            [
                 "Coral Del Mar Lopez Rosario",
-                array(
-                    "full_name" => "Coral Del Mar Lopez Rosario",
-                    "prefix"    => "",
-                    "fname"     => "Coral",
-                    "mname"     => "",
-                    "lname"     => "Del Mar Lopez Rosario",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Roberta R. W. Kameda",
-                array(
-                    "full_name" => "Roberta R. W. Kameda",
-                    "prefix"    => "",
-                    "fname"     => "Roberta",
-                    "mname"     => "R. W.",
-                    "lname"     => "Kameda",
-                    "suffix"    => ""
-                )
-            ),
-        );
-    }
-
-
-    public function functionalNameProvider()
-    {
-        return array(
-                        array(
-                "Gerardo De Los Ang Camacho III",
-                array(
-                    "full_name" => "Gerardo De Los Ang Camacho III",
-                    "prefix"    => "",
-                    "fname"     => "Gerardo",
-                    "mname"     => "De Los Ang",
-                    "lname"     => "Camacho",
-                    "suffix"    => "III"
-                )
-            ),
-            array(
-                "Erich von Stroheim",
-                array(
-                    "full_name" => "Erich von Stroheim",
-                    "prefix"    => "",
-                    "fname"     => "Erich",
-                    "mname"     => "",
-                    "lname"     => "Von Stroheim",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Manuel De Jesus Van Halen Jr",
-                array(
-                    "full_name" => "Manuel De Jesus Van Halen Jr",
-                    "prefix"    => "",
-                    "fname"     => "Manuel",
-                    "mname"     => "De Jesus",
-                    "lname"     => "Van Halen",
-                    "suffix"    => "Jr"
-                )
-            ),
-            array(
-                "Manuel De Jesus Balam Jr",
-                array(
-                    "full_name" => "Manuel De Jesus Balam Jr",
-                    "prefix"    => "",
-                    "fname"     => "Manuel",
-                    "mname"     => "De Jesus",
-                    "lname"     => "Balam",
-                    "suffix"    => "Jr"
-                )
-            ),
-            array(
-                "Carol Frances Ma Molloy",
-                array(
-                    "full_name" => "Carol Frances Ma Molloy",
-                    "prefix"    => "",
-                    "fname"     => "",
-                    "mname"     => "",
-                    "lname"     => "",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Coral Del Mar Lopez Rosario",
-                array(
+                [
                     "full_name" => "Coral Del Mar Lopez Rosario",
                     "prefix"    => "",
                     "fname"     => "",
                     "mname"     => "",
                     "lname"     => "",
                     "suffix"    => ""
-                )
-            ),
-            array(
+                ]
+            ],
+            [
                 "Roberta R. W. Kameda",
-                array(
+                [
                     "full_name" => "Roberta R. W. Kameda",
                     "prefix"    => "",
                     "fname"     => "Roberta",
                     "mname"     => "R. W.",
                     "lname"     => "Kameda",
                     "suffix"    => ""
-                )
-            ),
-            array(
-                "Gemma De Lemos Mondala",
-                array(
-                    "full_name" => "Gemma De Lemos Mondala",
-                    "prefix"    => "",
-                    "fname"     => "Gemma",
-                    "mname"     => "De Lemos",
-                    "lname"     => "Mondala",
-                    "suffix"    => "",
-                )
-            ),
-            array(
-                "Gerardo De Los Ang Camacho III",
-                array(
-                    "full_name" => "Gerardo De Los Ang Camacho III",
-                    "prefix"    => "",
-                    "fname"     => "Gerardo",
-                    "mname"     => "De Los Ang",
-                    "lname"     => "Camacho",
-                    "suffix"    => "III"
-                )
-            ),
-            array(
-                "Roberta R.W. Kameda",
-                array(
-                    "full_name" => "Roberta R.W. Kameda",
-                    "prefix"    => "",
-                    "fname"     => "",
-                    "mname"     => "",
-                    "lname"     => "",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Mr Anthony R Von Fange III",
-                array(
-                    "full_name"  => "Mr Anthony R Von Fange III",
-                    "prefix"     => "Mr.",
-                    "fname"      => "Anthony",
-                    "mname"      => "R",
-                    "lname"      => "Von Fange",
-                    "suffix"     => "III",
-                )
-            ),
-            array(
-                "J. B. Hunt",
-                array(
-                    "full_name" => "J. B. Hunt",
-                    "prefix"    => "",
-                    "fname"     => "J.",
-                    "mname"     => "B.",
-                    "lname"     => "Hunt",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "J.B. Hunt",
-                array(
-                    "full_name"  => "J.B. Hunt",
-                    "prefix"     => "",
-                    "fname"      => "J.B.",
-                    "mname"      => "",
-                    "lname"      => "Hunt",
-                    "suffix"     => ""
-                )
-            ),
-            array(
-                "Edward Senior III",
-                array(
-                    "full_name" => "Edward Senior III",
-                    "prefix"    => "",
-                    "fname"     => "Edward",
-                    "mname"     => "",
-                    "lname"     => "Senior",
-                    "suffix"    => "III"
-                )
-            ),
-            array(
-                "Edward Dale Senior II",
-                array(
-                    "full_name" => "Edward Dale Senior II",
-                    "prefix"    => "",
-                    "fname"     => "",
-                    "mname"     => "",
-                    "lname"     => "",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Dale Edward Jones Senior",
-                array(
-                    "full_name" => "Dale Edward Jones Senior",
-                    "prefix"    => "",
-                    "fname"     => "",
-                    "mname"     => "",
-                    "lname"     => "",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Edward Senior II",
-                array(
-                    "full_name" => "Edward Senior II",
-                    "prefix"    => "",
-                    "fname"     => "Edward",
-                    "mname"     => "",
-                    "lname"     => "Senior",
-                    "suffix"    => "II"
-                )
-            ),
-            array(
-                "Dale E. Senior II, PhD",
-                array(
-                    "full_name" => "Dale E. Senior II, PhD",
-                    "prefix"    => "",
-                    "fname"     => "Dale",
-                    "mname"     => "E.",
-                    "lname"     => "Senior",
-                    "suffix"    => "II, PhD"
-                )
-            ),
-            array(
-                "Jason Rodriguez Sr.",
-                array(
-                    "full_name" => "Jason Rodriguez Sr.",
-                    "prefix"    => "",
-                    "fname"     => "Jason",
-                    "mname"     => "",
-                    "lname"     => "Rodriguez",
-                    "suffix"    => "Sr"
-                )
-            ),
-            array(
-                "Jason Senior",
-                array(
-                    "full_name" => "Jason Senior",
-                    "prefix"    => "",
-                    "fname"     => "Jason",
-                    "mname"     => "",
-                    "lname"     => "Senior",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Abby U. Van Grinsven",
-                array(
-                    "full_name" => "Abby U. Van Grinsven",
-                    "prefix"    => "",
-                    "fname"     => "Abby",
-                    "mname"     => "U.",
-                    "lname"     => "Van Grinsven",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Sara Ann Fraser",
-                array(
-                    "full_name" => "Sara Ann Fraser",
-                    "prefix"    => "",
-                    "fname"     => "",
-                    "mname"     => "",
-                    "lname"     => "",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Adam",
-                array(
-                    "full_name" => "Adam",
-                    "prefix"    => "",
-                    "fname"     => "Adam",
-                    "mname"     => "",
-                    "lname"     => "",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "OLD MACDONALD",
-                array(
-                    "full_name" => "OLD MACDONALD",
-                    "prefix"    => "",
-                    "fname"     => "Old",
-                    "mname"     => "",
-                    "lname"     => "Macdonald",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Old MacDonald",
-                array(
-                    "full_name" => "Old MacDonald",
-                    "prefix"    => "",
-                    "fname"     => "Old",
-                    "mname"     => "",
-                    "lname"     => "MacDonald",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Old McDonald",
-                array(
-                    "full_name" => "Old McDonald",
-                    "prefix"    => "",
-                    "fname"     => "Old",
-                    "mname"     => "",
-                    "lname"     => "McDonald",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Old Mc Donald",
-                array(
-                    "full_name" => "Old Mc Donald",
-                    "prefix"    => "",
-                    "fname"     => "",
-                    "mname"     => "",
-                    "lname"     => "",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Old Mac Donald",
-                array(
-                    "full_name" => "Old Mac Donald",
-                    "prefix"    => "",
-                    "fname"     => "",
-                    "mname"     => "",
-                    "lname"     => "",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "James van Allen",
-                array(
-                    "full_name" => "James van Allen",
-                    "prefix"    => "",
-                    "fname"     => "James",
-                    "mname"     => "",
-                    "lname"     => "Van Allen",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Jimmy (Bubba) Smith",
-                array(
-                    "full_name" => "Jimmy (Bubba) Smith",
-                    "prefix"    => "",
-                    "fname"     => "",
-                    "mname"     => "",
-                    "lname"     => "",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Miss Jennifer Shrader Lawrence",
-                array(
-                    "full_name" => "Miss Jennifer Shrader Lawrence",
-                    "prefix"    => "",
-                    "fname"     => "",
-                    "mname"     => "",
-                    "lname"     => "",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Jonathan Smith, MD",
-                array(
-                    "full_name" => "Jonathan Smith, MD",
-                    "prefix"    => "",
-                    "fname"     => "Jonathan",
-                    "mname"     => "",
-                    "lname"     => "Smith",
-                    "suffix"    => "MD"
-                )
-            ),
-            array(
-                "Dr. Jonathan Smith",
-                array(
-                    "full_name" => "Dr. Jonathan Smith",
-                    "prefix"    => "Dr.",
-                    "fname"     => "Jonathan",
-                    "mname"     => "",
-                    "lname"     => "Smith",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "ABIGAIL G. FREEDMAN",
-                array(
-                    "full_name" => "ABIGAIL G. FREEDMAN",
-                    "prefix"    => "",
-                    "fname"     => "Abigail",
-                    "mname"     => "G.",
-                    "lname"     => "Freedman",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Miss Jamie P. Harrowitz",
-                array(
-                    "full_name" => "Miss Jamie P. Harrowitz",
-                    "prefix"    => "Ms.",
-                    "fname"     => "Jamie",
-                    "mname"     => "P.",
-                    "lname"     => "Harrowitz",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Mr John Doe",
-                array(
-                    "full_name" => "Mr John Doe",
-                    "prefix"    => "Mr.",
-                    "fname"     => "John",
-                    "mname"     => "",
-                    "lname"     => "Doe",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Rev. Dr John Doe",
-                array(
-                    "full_name" => "Rev. Dr John Doe",
-                    "prefix"    => "Rev. Dr.",
-                    "fname"     => "John",
-                    "mname"     => "",
-                    "lname"     => "Doe",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Anthony Von Fange III",
-                array(
-                    "full_name" => "Anthony Von Fange III",
-                    "prefix"    => "",
-                    "fname"     => "Anthony",
-                    "mname"     => "",
-                    "lname"     => "Von Fange",
-                    "suffix"    => "III"
-                )
-            ),
-            array(
-                "Anthony Von Fange III, PhD",
-                array(
-                    "full_name" => "Anthony Von Fange III, PhD",
-                    "prefix"    => "",
-                    "fname"     => "Anthony",
-                    "mname"     => "",
-                    "lname"     => "Von Fange",
-                    "suffix"    => "III, PhD"
-                )
-            ),
-            array(
-                "Smarty Pants Phd",
-                array(
-                    "full_name" => "Smarty Pants Phd",
-                    "prefix"    => "",
-                    "fname"     => "Smarty",
-                    "mname"     => "",
-                    "lname"     => "Pants",
-                    "suffix"    => "Phd"
-                )
-            ),
-            array(
-                "Mark Peter Williams",
-                array(
-                    "full_name" => "Mark Peter Williams",
-                    "prefix"    => "",
-                    "fname"     => "",
-                    "mname"     => "",
-                    "lname"     => "",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Mark P Williams",
-                array(
-                    "full_name" => "Mark P Williams",
-                    "prefix"    => "",
-                    "fname"     => "Mark",
-                    "mname"     => "P",
-                    "lname"     => "Williams",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Mark P. Williams",
-                array(
-                    "full_name" => "Mark P. Williams",
-                    "prefix"    => "",
-                    "fname"     => "Mark",
-                    "mname"     => "P.",
-                    "lname"     => "Williams",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "M Peter Williams",
-                array(
-                    "full_name" => "M Peter Williams",
-                    "prefix"    => "",
-                    "fname"     => "",
-                    "mname"     => "",
-                    "lname"     => "",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "M. Peter Williams",
-                array(
-                    "full_name" => "M. Peter Williams",
-                    "prefix"    => "",
-                    "fname"     => "",
-                    "mname"     => "",
-                    "lname"     => "",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "M. P. Williams",
-                array(
-                    "full_name" => "M. P. Williams",
-                    "prefix"    => "",
-                    "fname"     => "M.",
-                    "mname"     => "P.",
-                    "lname"     => "Williams",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Rev. Mark Williams",
-                array(
-                    "full_name" => "Rev. Mark Williams",
-                    "prefix"    => "Rev.",
-                    "fname"     => "Mark",
-                    "mname"     => "",
-                    "lname"     => "Williams",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Mister Mark Williams",
-                array(
-                    "full_name" => "Mister Mark Williams",
-                    "prefix"    => "Mr.",
-                    "fname"     => "Mark",
-                    "mname"     => "",
-                    "lname"     => "Williams",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Rev Al Sharpton",
-                array(
-                    "full_name" => "Rev Al Sharpton",
-                    "prefix"    => "Rev.",
-                    "fname"     => "Al",
-                    "mname"     => "",
-                    "lname"     => "Sharpton",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Dr Ty P. Bennington iIi",
-                array(
-                    "full_name" => "Dr Ty P. Bennington iIi",
-                    "prefix"    => "Dr.",
-                    "fname"     => "Ty",
-                    "mname"     => "P.",
-                    "lname"     => "Bennington",
-                    "suffix"    => "III"
-                )
-            ),
-            array(
-                "Prof. Ron Brown MD",
-                array(
-                    "full_name" => "Prof. Ron Brown MD",
-                    "prefix"    => "Prof.",
-                    "fname"     => "Ron",
-                    "mname"     => "",
-                    "lname"     => "Brown",
-                    "suffix"    => "MD"
-                )
-            ),
-            array(
-                "Not So Smarty Pants, Silly",
-                array(
-                    "full_name" => "Not So Smarty Pants, Silly",
-                    "prefix"    => "",
-                    "fname"     => "",
-                    "mname"     => "",
-                    "lname"     => "",
-                    "suffix"    => ""
-                )
-            ),
-            array(
-                "Louis-Alphonse Quig",
-                array(
-                    "full_name" => "Louis-Alphonse Quig",
-                    "prefix"    => "",
-                    "fname"     => "Louis-Alphonse",
-                    "mname"     => "",
-                    "lname"     => "Quig",
-                    "suffix"    => ""
-                )
-            ),
-        );
+                ]
+            ],
+        ];
     }
 }
