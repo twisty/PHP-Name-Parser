@@ -193,6 +193,17 @@ class FullNameParserTest extends TestBase
                     "suffix"    => ""
                 ]
             ],
+            [
+                "Lt. Col. Marc Jeffrey Lopez Jr.",
+                [
+                    "full_name" => "Lt. Col. Marc Jeffrey Lopez Jr.",
+                    "prefix"    => "Lt. Col.",
+                    "fname"     => "Marc",
+                    "mname"     => "Jeffrey",
+                    "lname"     => "Lopez",
+                    "suffix"    => "Jr"
+                ]
+            ],
         ];
     }
 }
