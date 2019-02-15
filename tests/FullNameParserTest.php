@@ -183,27 +183,38 @@ class FullNameParserTest extends TestBase
                 ]
             ],
             [
-                "Roberta R. W. Kameda",
+                "Roberta R. W. Kameda II Jr.",
                 [
-                    "full_name" => "Roberta R. W. Kameda",
+                    "full_name" => "Roberta R. W. Kameda II Jr.",
                     "prefix"    => "",
                     "fname"     => "Roberta",
                     "mname"     => "R. W.",
                     "lname"     => "Kameda",
-                    "suffix"    => ""
+                    "suffix"    => "II, Jr"
                 ]
             ],
             [
-                "Lt. Col. Marc Jeffrey Lopez Jr.",
+                "Marc Jeffrey Lopez Jr. Ph.D.",
                 [
-                    "full_name" => "Lt. Col. Marc Jeffrey Lopez Jr.",
-                    "prefix"    => "Lt. Col.",
+                    "full_name" => "Marc Jeffrey Lopez Jr. Ph.D.",
+                    "prefix"    => "",
                     "fname"     => "Marc",
                     "mname"     => "Jeffrey",
                     "lname"     => "Lopez",
-                    "suffix"    => "Jr"
+                    "suffix"    => "Jr, Ph.D."
                 ]
             ],
+            [
+                "Dr. Juan Xavier Q. de la Vega III",
+                [
+                    "full_name" => "Dr. Juan Xavier Q. de la Vega III",
+                    "prefix" => "Dr.",
+                    "fname" => "Juan",
+                    "mname" => "Xavier Q.",
+                    "lname" => "De La Vega",
+                    "suffix" => "III"
+                ]
+            ]
         ];
     }
 }

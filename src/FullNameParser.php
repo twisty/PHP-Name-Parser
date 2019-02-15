@@ -2,6 +2,8 @@
 
 namespace NameParser;
 
+use Exception;
+
 /**
  * Split a full name into its constituent parts
  *   - prefix/salutation (Mr. Mrs. Dr. etc)
@@ -102,23 +104,23 @@ class FullNameParser
                 'I', 'II', 'III', 'IV', 'V', '1st', '2nd', '3rd', '4th', '5th', 'Senior', 'Junior', 'Jr', 'Sr'
             ],
             'prof' => [
-                'AO', 'B.A.', 'M.Sc', 'BCompt', 'PhD', 'Ph.D.', 'APR', 'RPh', 'PE', 'MD', 'M.D.', 'MA', 'DMD', 'CME', 'BSc', 'Bsc', 'BSc(hons)', 'Ph.D.', 'BEng', 'M.B.A.', 'MBA',
+                'AO', 'B.A.', 'M.Sc', 'BCompt', 'PhD', 'Ph.D.', 'APR', 'RPh', 'PE', 'MD', 'M.D.', 'MA', 'DMD', 'CME', 'BSc', 'BSc(hons)', 'BEng', 'M.B.A.', 'MBA',
                 'FAICD', 'CM', 'OBC', 'M.B.', 'ChB', 'FRCP', 'FRSC', 'FREng', 'Esq', 'MEng', 'MSc', 'J.D.', 'JD', 'BGDipBus', 'Dip', 'Dipl.Phys', 'M.H.Sc.', 'MPA', 'B.Comm', 'B.Eng',
                 'B.Acc', 'FSA', 'PGDM', 'FCPA', 'RN', 'R.N.', 'MSN', 'PCA', 'PCCRM', 'PCFP', 'PCGD', 'PCHR', 'PCM', 'PCPS', 'PCPM', 'PCSCM', 'PCSM', 'PCMM', 'PCTC', 'ACA', 'FCA',
                 'ACMA', 'FCMA', 'AAIA', 'FAIA', 'CCC', 'MIPA', 'FIPA', 'CIA', 'CFE', 'CISA', 'CFAP', 'QC', 'Q.C.', 'M.Tech', 'CTA', 'C.I.M.A.', 'B.Ec', 'CFIA', 'ICCP', 'CPS', 'CAP-OM',
                 'CAPTA', 'TNAOAP', 'AFA', 'AVA', 'ASA', 'CAIA', 'CBA', 'CVA', 'ICVS', 'CIIA', 'CMU', 'PFM', 'PRM', 'CFP', 'CWM', 'CCP', 'EA', 'CCMT', 'CGAP', 'CDFM', 'CFO', 'CGFM',
-                'CGAT', 'CGFO', 'CMFO', 'CPFO', 'CPFA', 'BMD', 'BIET', 'P.Eng', 'PE', 'MBBS', 'MB', 'BCh', 'BAO', 'BMBS', 'MBBChir', 'MBChBa', 'MPhil', 'LL.D', 'LLD', 'D.Lit', 'DEA',
+                'CGAT', 'CGFO', 'CMFO', 'CPFO', 'CPFA', 'BMD', 'BIET', 'P.Eng', 'MBBS', 'MB', 'BCh', 'BAO', 'BMBS', 'MBBChir', 'MBChBa', 'MPhil', 'LL.D', 'LLD', 'D.Lit', 'DEA',
                 'DESS', 'DClinPsy', 'DSc', 'MRes', 'M.Res', 'Psy.D', 'Pharm.D', 'BA(Admin)', 'BAcc', 'BACom', 'BAdmin', 'BAE', 'BAEcon', 'BA(Ed)', 'BA(FS)', 'BAgr', 'BAH', 'BAI', 'BAI(Elect)',
-                'BAI(Mech)', 'BALaw', 'BAO', 'BAppSc', 'BArch', 'BArchSc', 'BARelSt', 'BASc', 'BASoc', 'DDS', 'D.D.S.', 'BATheol', 'BBA', 'BBLS', 'BBS', 'BBus', 'BChem', 'BCJ', 'BCL',
+                'BAI(Mech)', 'BALaw', 'BAppSc', 'BArch', 'BArchSc', 'BARelSt', 'BASc', 'BASoc', 'DDS', 'D.D.S.', 'BATheol', 'BBA', 'BBLS', 'BBS', 'BBus', 'BChem', 'BCJ', 'BCL',
                 'BCLD(SocSc)', 'BClinSci', 'BCom', 'BCombSt', 'BCommEdCommDev', 'BComp', 'BComSc', 'BCoun', 'BD', 'BDes', 'BE', 'BEcon', 'BEcon&Fin', 'M.P.P.M.', 'MPPM', 'BEconSci', 'BEd',
-                'BEng', 'BES', 'BEng(Tech)', 'BFA', 'BFin', 'BFLS', 'BFST', 'BH', 'BHealthSc', 'BHSc', 'BHy', 'BJur', 'BL', 'BLE', 'BLegSc', 'BLib', 'BLing', 'BLitt', 'BLittCelt', 'BLS',
-                'BMedSc', 'BMet', 'BMid', 'BMin', 'BMS', 'BMSc', 'BMSc', 'BMS', 'BMus', 'BMusEd', 'BMusPerf', 'BN', 'BNS', 'BNurs', 'BOptom', 'BPA', 'BPharm', 'BPhil', 'TTC', 'DIP', 'Tchg',
-                'BEd', 'MEd', 'ACIB', 'FCIM', 'FCIS', 'FCS', 'Fcs', 'Bachelor', 'O.C.', 'JP', 'C.Eng', 'C.P.A.', 'B.B.S.', 'MBE', 'GBE', 'KBE', 'DBE', 'CBE', 'OBE', 'MRICS',  'D.P.S.K.',
-                'D.P.P.J.', 'DPSK', 'DPPJ', 'B.B.A.', 'GBS', 'MIGEM', 'M.I.G.E.M.', 'FCIS', 'BPhil(Ed)', 'BPhys', 'BPhysio', 'BPl', 'BRadiog', 'BSc', 'B.Sc', 'BScAgr', 'BSc(Dairy)',
-                'BSc(DomSc)', 'BScEc', 'BScEcon', 'BSc(Econ)', 'BSc(Eng)', 'BScFor', 'BSc(HealthSc)', 'BSc(Hort)', 'BBA', 'B.B.A.', 'BSc(MCRM)', 'BSc(Med)', 'BSc(Mid)', 'BSc(Min)',
-                'BSc(Psych)', 'BSc(Tech)', 'BSD', 'BSocSc', 'BSS', 'BStSu', 'BTchg', 'BTCP', 'BTech', 'BTechEd', 'BTh', 'BTheol', 'BTS', 'EdB', 'LittB', 'LLB', 'MA', 'MusB', 'ScBTech',
-                'CEng', 'FCA', 'CFA', 'Cfa', 'C.F.A.', 'LLB', 'LL.B', 'LLM', 'LL.M', 'CA(SA)', 'C.A.', 'CA', 'CPA',  'Solicitor',  'DMS', 'FIWO', 'CEnv', 'MICE', 'MIWEM', 'B.Com', 'BCom',
-                'BAcc', 'BA', 'BEc', 'MEc', 'HDip', 'B.Bus.', 'E.S.C.P.'
+                'BES', 'BEng(Tech)', 'BFA', 'BFin', 'BFLS', 'BFST', 'BH', 'BHealthSc', 'BHSc', 'BHy', 'BJur', 'BL', 'BLE', 'BLegSc', 'BLib', 'BLing', 'BLitt', 'BLittCelt', 'BLS',
+                'BMedSc', 'BMet', 'BMid', 'BMin', 'BMS', 'BMSc', 'BMus', 'BMusEd', 'BMusPerf', 'BN', 'BNS', 'BNurs', 'BOptom', 'BPA', 'BPharm', 'BPhil', 'TTC', 'Tchg',
+                'MEd', 'ACIB', 'FCIM', 'FCIS', 'FCS', 'Bachelor', 'O.C.', 'JP', 'C.Eng', 'C.P.A.', 'B.B.S.', 'MBE', 'GBE', 'KBE', 'DBE', 'CBE', 'OBE', 'MRICS',  'D.P.S.K.',
+                'D.P.P.J.', 'DPSK', 'DPPJ', 'B.B.A.', 'GBS', 'MIGEM', 'M.I.G.E.M.', 'BPhil(Ed)', 'BPhys', 'BPhysio', 'BPl', 'BRadiog', 'B.Sc', 'BScAgr', 'BSc(Dairy)',
+                'BSc(DomSc)', 'BScEc', 'BScEcon', 'BSc(Econ)', 'BSc(Eng)', 'BScFor', 'BSc(HealthSc)', 'BSc(Hort)', 'BSc(MCRM)', 'BSc(Med)', 'BSc(Mid)', 'BSc(Min)',
+                'BSc(Psych)', 'BSc(Tech)', 'BSD', 'BSocSc', 'BSS', 'BStSu', 'BTchg', 'BTCP', 'BTech', 'BTechEd', 'BTh', 'BTheol', 'BTS', 'EdB', 'LittB', 'LLB', 'MusB', 'ScBTech',
+                'CEng', 'CFA', 'C.F.A.', 'LL.B', 'LLM', 'LL.M', 'CA(SA)', 'C.A.', 'CA', 'CPA',  'Solicitor',  'DMS', 'FIWO', 'CEnv', 'MICE', 'MIWEM', 'B.Com',
+                'BA', 'BEc', 'MEc', 'HDip', 'B.Bus.', 'E.S.C.P.'
             ]
         ],
         'vowels' => [
@@ -149,75 +151,112 @@ class FullNameParser
      */
     public function parse_name($full_name)
     {
-        $full_name = trim($full_name);
-        $unparsed_name = $full_name;
+        try {
+            $full_name = trim($full_name);
+            $unparsed_name = $full_name;
 
-        $prefix      = '';
-        $first_name  = '';
-        $middle_name = '';
-        $last_name   = '';
-        $suffix      = '';
+            $prefix      = '';
+            $first_name  = '';
+            $middle_name = '';
+            $last_name   = '';
+            $suffix      = '';
 
-        $name = $this->format_name($full_name, $prefix, $first_name, $middle_name, $last_name, $suffix);
+            $format_name = $this->format_name($full_name, $prefix, $first_name, $middle_name, $last_name, $suffix);
 
-        # If nickname then it's hard to parse other stuff
-        if ($this->get_nickname($full_name)) {
-            return $name;
+            # If nickname then it's hard to parse other stuff
+            if ($this->get_nickname($full_name)) {
+                return $format_name;
+            }
+            # Parse professional prefix or prefixes
+            list($full_name, $suffix) = $this->get_professional_suffix($full_name);
+
+            # Grab a list of words from the remainder of the full name
+            $unfiltered_name_parts = $this->break_words($full_name);
+
+            list($prefix, $suffix, $unfiltered_name_parts) = $this->get_suffix_and_prefix($suffix, $prefix, $unfiltered_name_parts, $full_name);
+
+            $unfiltered_name_parts = $this->repack_name_parts($unfiltered_name_parts);
+
+            list($unfiltered_name_parts, $first_name, $middle_name, $index) = $this->get_first_and_middle($unfiltered_name_parts, $first_name, $middle_name);
+
+            list($unfiltered_name_parts, $last_name) = $this->get_last_maybe_first($unfiltered_name_parts, $last_name, $index);
+
+            # return the various parts in an array
+            return $this->format_name($unparsed_name, $prefix, trim($first_name), trim($middle_name), trim($last_name), $suffix);
+        } catch (Exception $e) {
+            return $this->default($format_name, $full_name, $prefix, $suffix);
         }
+    }
 
-        $unfiltered_name_parts = $this->break_words($full_name);
-        # Find all the professional suffixes possible
-        $professional_suffix = $this->get_pro_suffix($full_name);
+    public function format_name($full_name, $prefix, $fname, $mname, $lname, $suffix)
+    {
+        return [
+            'full_name' => $full_name,
+            'prefix' => $prefix,
+            'fname' => $fname,
+            'mname' => $mname,
+            'lname' => $lname,
+            'suffix' => $suffix,
+        ];
+    }
 
-        # The position of the first professional suffix denotes the end of the name and the start of suffixes
-        $first_suffix_index = mb_strlen($full_name);
-        foreach ($professional_suffix as $pro_suffix) {
-            $start = mb_strpos($full_name, $pro_suffix);
-            if ($start === FALSE) {
-                continue;
-            }
-            if ($start < $first_suffix_index) {
-                $first_suffix_index = $start;
-            }
+    /**
+     * Parse suffix and prefixes
+     * 
+     * @param  string $suffix
+     * @param  string $prefix
+     * @param  array $unfiltered_name_parts
+     * @param  string $full_name
+     * @return array
+     */
+    protected function get_suffix_and_prefix($suffix, $prefix, $unfiltered_name_parts, $full_name)
+    {
+        if (!count($unfiltered_name_parts)) {
+            return [
+                '',
+                '',
+                $unfiltered_name_parts,
+            ];
         }
-
-        if (count($professional_suffix)) {
-            $real_suffix = $this->check_next_words($full_name, $first_suffix_index);
-            if ($real_suffix) {
-                # everything to the right of the first professional suffix is part of the suffix
-                $suffix = mb_substr($full_name, $first_suffix_index);
-
-                # remove the suffixes from the full_name
-                $full_name = mb_substr($full_name, 0, $first_suffix_index);
-            } else {
-                # Hard to parse
-                return $this->check_if_three($name, $prefix, $suffix, $unfiltered_name_parts);
-            }
+        # Is first word a title or multiple titles consecutively?
+        # only start looking if there are any words left in the name to process
+        while (count($unfiltered_name_parts) && $this->is_prefix($unfiltered_name_parts[0])) {
+            $prefix .= "{$this->temp['prefix']} ";
+            unset($this->temp['prefix']);
+            array_shift($unfiltered_name_parts);
         }
-
-        # Grab a list of words from the remainder of the full name
-        $unfiltered_name_parts = $this->break_words($full_name);
-
-        list($prefix, $suffix, $unfiltered_name_parts) = $this->get_suffix_and_prefix($suffix, $prefix, $unfiltered_name_parts, $full_name);
-
-        # Re-pack the unfiltered name parts array and exclude empty words
-        $name_parts = [];
-        foreach ($unfiltered_name_parts as $name_part) {
-            $name_part = trim($name_part);
-            $name_part = rtrim($name_part, ',');
-            if (mb_strlen($name_part) == '1' && !$this->mb_ctype_alpha($name_part)) {
-                # If any word left is of one character that is not alphabetic then it is not a real word, so remove it
-                $name_part = "";
-            }
-            if (mb_strlen(trim($name_part))) {
-                $name_parts[] = $name_part;
-            }
+        $prefix = trim($prefix);
+        # Find if there is a line suffix, if so then move it out
+        # Is last word a suffix or multiple suffixes consecutively?
+        while (
+            count($unfiltered_name_parts) 
+            && $this->is_line_suffix($unfiltered_name_parts[count($unfiltered_name_parts) - 1], $full_name)
+        ) {
+            $suffix = $suffix != '' ? "{$this->temp['suffix']}, {$suffix}" : $suffix . $this->temp['suffix'];
+            unset($this->temp['suffix']);
+            array_pop($unfiltered_name_parts);
         }
-        $unfiltered_name_parts = $name_parts;
+        $suffix = trim($suffix);
 
+        return [
+            $prefix,
+            $suffix,
+            $unfiltered_name_parts,
+        ];
+    }
+
+    /**
+     * Parse First and maybe Middle names
+     * 
+     * @param  array $unfiltered_name_parts
+     * @param  string $first_name
+     * @param  string $middle_name
+     * @return array
+     */
+    protected function get_first_and_middle($unfiltered_name_parts, $first_name, $middle_name)
+    {
         # set the ending range after prefix/suffix trim
         $end = count($unfiltered_name_parts);
-
         # concat the first name
         for ($index = 0; $index < $end - 1; $index++) {
             $word = $unfiltered_name_parts[$index];
@@ -251,9 +290,28 @@ class FullNameParser
                 $middle_name .= " " . $this->fix_case($word);
             } else {
                 # Hard to parse
-                return $this->check_if_three($name, $prefix, $suffix, $unfiltered_name_parts);
+                throw new Exception('Hard to parse');
             }
         }
+
+        return [
+            $unfiltered_name_parts,
+            $first_name,
+            $middle_name,
+            $index,
+        ];
+    }
+
+    /**
+     * Parse Last or maybe first name if the string is one word
+     * 
+     * @param  array  $unfiltered_name_parts
+     * @param  string $last_name
+     * @param  int    $index                 Position of the unfiltered_name_parts where the get_first_and_middle function ends
+     * @return array
+     */
+    protected function get_last_maybe_first($unfiltered_name_parts, $last_name, $index)
+    {
         # Resets the index number
         $unfiltered_name_parts = array_values($unfiltered_name_parts);
         $end = count($unfiltered_name_parts);
@@ -272,9 +330,8 @@ class FullNameParser
                         $last_name_set = true;
                     } else {
                         # hard to parse
-                        return $this->check_if_three($name, $prefix, $suffix, $unfiltered_name_parts);
+                        throw new Exception('Hard to parse');
                     }
-                    # $last_name .= " " . $this->fix_case($word);
                 }
             } else {
                 # otherwise, single word strings are assumed to be first names
@@ -284,58 +341,34 @@ class FullNameParser
             $first_name = "";
         }
 
-        # return the various parts in an array
-        return $this->format_name($unparsed_name, $prefix, trim($first_name), trim($middle_name), trim($last_name), $suffix);
-    }
-
-    public function format_name($full_name, $prefix, $fname, $mname, $lname, $suffix)
-    {
         return [
-            'full_name' => $full_name,
-            'prefix' => $prefix,
-            'fname' => $fname,
-            'mname' => $mname,
-            'lname' => $lname,
-            'suffix' => $suffix,
+            $unfiltered_name_parts,
+            $last_name,
         ];
     }
 
-    public function get_suffix_and_prefix($suffix, $prefix, $unfiltered_name_parts, $full_name)
+
+    /**
+     * Re-pack the unfiltered name parts array and exclude empty words
+     *
+     * @param  array $unfiltered_name_parts
+     * @return array
+     */
+    protected function repack_name_parts($unfiltered_name_parts)
     {
-        # Is first word a title or multiple titles consecutively?
-        if (count($unfiltered_name_parts)) {
-            // only start looking if there are any words left in the name to process
-            while (count($unfiltered_name_parts) > 0 && $this->is_prefix($unfiltered_name_parts[0])) {
-                $prefix .= "{$this->temp['prefix']} ";
-                unset($this->temp['prefix']);
-                array_shift($unfiltered_name_parts);
+        $name_parts = [];
+        foreach ($unfiltered_name_parts as $name_part) {
+            $name_part = rtrim(trim($name_part), ',');
+            if (mb_strlen($name_part) == '1' && !$this->mb_ctype_alpha($name_part)) {
+                # If any word left is of one character that is not alphabetic then it is not a real word, so remove it
+                $name_part = "";
             }
-            $prefix = trim($prefix);
-            // Find if there is a line suffix, if so then move it out
-            # Is last word a suffix or multiple suffixes consecutively?
-            while (
-                count($unfiltered_name_parts) > 0
-                && $this->is_line_suffix($unfiltered_name_parts[count($unfiltered_name_parts) - 1], $full_name)
-            ) {
-                if ($suffix != "") {
-                    $suffix = $this->temp['suffix'] . ", " . $suffix;
-                } else {
-                    $suffix .= $this->temp['suffix'];
-                }
-                unset($this->temp['suffix']);
-                array_pop($unfiltered_name_parts);
+            if (mb_strlen(trim($name_part))) {
+                $name_parts[] = $name_part;
             }
-            $suffix = trim($suffix);
-        } else {
-            $prefix = "";
-            $suffix = "";
         }
 
-        return [
-            $prefix,
-            $suffix,
-            $unfiltered_name_parts,
-        ];
+        return $name_parts;
     }
 
     /**
@@ -344,29 +377,81 @@ class FullNameParser
      * @param string $name the name you wish to test
      * @return true returns true if the suffix exists, false otherwise
      */
-    public function get_pro_suffix($name)
+    public function is_professional_suffix($name)
     {
         $found_suffix_arr = [];
         foreach ($this->dict['suffixes']['prof'] as $suffix) {
-            if (preg_match('/[,\s]+' . preg_quote($suffix) . '\b/i', $name, $matches)) {
-                $found_suffix       = trim($matches[0]);
+            if (
+                preg_match('/[,\s]' . preg_quote($suffix) . '(\b|\s|$)+/i', $name, $matches)
+                || mb_strtolower($suffix) === mb_strtolower($name)
+            ) {
+                $found_suffix       = isset($matches[0]) ? trim($matches[0]) : $name;
                 $found_suffix       = trim($found_suffix, ',');
                 $found_suffix_arr[] = trim($found_suffix);
             }
         }
+
         return $found_suffix_arr;
     }
 
+    protected function get_professional_suffix($full_name)
+    {
+        $suffix = '';
+        # Find all the professional suffixes possible
+        $professional_suffix = $this->is_professional_suffix($full_name);
+
+        # The position of the first professional suffix denotes the end of the name and the start of suffixes
+        $first_suffix_index = mb_strlen($full_name);
+        foreach ($professional_suffix as $pro_suffix) {
+            $start = mb_strpos($full_name, $pro_suffix);
+            if ($start === FALSE) {
+                continue;
+            }
+            if ($start < $first_suffix_index) {
+                $first_suffix_index = $start;
+            }
+        }
+
+        if (count($professional_suffix)) {
+            $real_suffix = $this->check_next_words($full_name, $first_suffix_index);
+
+            if ($real_suffix) {
+                # everything to the right of the first professional suffix is part of the suffix
+                $suffix = mb_substr($full_name, $first_suffix_index);
+
+                # remove the suffixes from the full_name
+                $full_name = mb_substr($full_name, 0, $first_suffix_index);
+            } else {
+                throw new Exception('Hard to parse');
+            }
+        }
+
+        return [
+            $full_name,
+            $suffix,
+        ];
+    }
+
+    /**
+     * Check if next words after a professional suffix are professional suffixes too
+     * 
+     * @param  string $full_name
+     * @param  int $professional_suffix_index Where in the $full_name the first professional suffix was found
+     * @return bool
+     */
     public function check_next_words($full_name, $professional_suffix_index)
     {
         $results = [];
         $supossed_suffix = mb_substr($full_name, $professional_suffix_index);
+
         $parts = $this->break_words($supossed_suffix);
+
         if (count($parts) === 1) {
             return true;
         }
+
         foreach ($parts as $key => $word) {
-            if (count($this->get_pro_suffix($word))) {
+            if (count($this->is_professional_suffix($word))) {
                 continue;
             }
             return false;
@@ -502,12 +587,14 @@ class FullNameParser
         return ((mb_strlen($word) == 1) || (mb_strlen($word) == 2 && $word[1] == "."));
     }
 
-    protected function check_if_three($name, $prefix, $suffix, $parts)
+    protected function default($format_name, $full_name, $prefix, $suffix)
     {
+        $parts = $this->break_words($full_name);
         if (count($parts) === 3) {
-            return $this->format_name($name['full_name'], $prefix, trim($parts[0]), trim($parts[1]), trim($parts[2]), $suffix);
+            return $this->format_name($full_name['full_name'], $prefix, trim($parts[0]), trim($parts[1]), trim($parts[2]), $suffix);
         }
-        return $name;
+
+        return $format_name;
     }
 
     # ucfirst words split by dashes or periods
