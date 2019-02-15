@@ -179,7 +179,7 @@ class FullNameParser
 
             list($unfiltered_name_parts, $first_name, $middle_name, $index) = $this->get_first_and_middle($unfiltered_name_parts, $first_name, $middle_name);
 
-            list($unfiltered_name_parts, $last_name) = $this->get_last_maybe_first($unfiltered_name_parts, $last_name, $index);
+            list($unfiltered_name_parts, $last_name) = $this->get_last_or_first($unfiltered_name_parts, $last_name, $index);
 
             # return the various parts in an array
             return $this->format_name($unparsed_name, $prefix, trim($first_name), trim($middle_name), trim($last_name), $suffix);
@@ -310,7 +310,7 @@ class FullNameParser
      * @param  int    $index                 Position of the unfiltered_name_parts where the get_first_and_middle function ends
      * @return array
      */
-    protected function get_last_maybe_first($unfiltered_name_parts, $last_name, $index)
+    protected function get_last_or_first($unfiltered_name_parts, $last_name, $index)
     {
         # Resets the index number
         $unfiltered_name_parts = array_values($unfiltered_name_parts);
