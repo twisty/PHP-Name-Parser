@@ -8,23 +8,42 @@ use NameParser\FullNameParser;
 
 class FullNameParserTest extends TestBase
 {
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
-
     /**
      * @dataProvider functionalOneNameProvider
      */
-    public function testName($name, $expected_result)
+    public function testName($name, $expectedResult)
     {
-        $parser = new FullNameParser();
-        $split_name = $parser->parse_name($name);
-        $this->assertEquals($expected_result, $split_name, "Failed asserting that " . json_encode($expected_result, JSON_PRETTY_PRINT) . PHP_EOL . "Is same as " . json_encode($split_name, JSON_PRETTY_PRINT));
+        $splitName = FullNameParser::parse($name);
+        $this->assertEquals($expectedResult, $splitName);
     }
-
-
+    /**
+     * @dataProvider differentDictionaryProvider
+     */
+    public function testNameDiffDictionary($name, $expectedResult)
+    {
+        $prefixes = [
+            ['mr', 'mister', 'master'],
+            ['mrs', 'missus', 'missis'],
+            ['ms', 'miss'],
+            ['dr', 'doctor'],
+            ['fr', 'father'],
+            ['prof', 'professor'],
+            ['hon', 'honorable'],
+            ['sgt', 'sargent'],
+            ['capt', 'captain'],
+            ['cmdr', 'commander'],
+            ['lt', 'lieutenant'],
+            ['col', 'colonel'],
+            ['gen', 'general'],
+            ['icdr', 'doctor of canon law', 'juris cononici doctor'],
+            ['judr', 'juris doctor utriusque', 'juris utriusque doctor', 'doctor rights', 'doctor of law'],
+        ];
+        $lineSuffixes = ['I', 'II', 'III', 'IV', 'V', 'jr', 'sr'];
+        FullNameParser::setPrefixes($prefixes);
+        FullNameParser::setLineSuffixes($lineSuffixes);
+        $splitName = FullNameParser::parse($name);
+        $this->assertEquals($expectedResult, $splitName);
+    }
     public function functionalOneNameProvider()
     {
         return [
@@ -62,14 +81,14 @@ class FullNameParserTest extends TestBase
                 ]
             ],
             [
-                "Allyson De Guzman Jr.",
+                "Ms. Allyson De Guzman Junior",
                 [
-                    "full_name" => "Allyson De Guzman Jr.",
-                    "prefix"    => "",
+                    "full_name" => "Ms. Allyson De Guzman Junior",
+                    "prefix"    => "Ms.",
                     "fname"     => "Allyson",
                     "mname"     => "",
                     "lname"     => "De Guzman",
-                    "suffix"    => "Jr"
+                    "suffix"    => "Junior"
                 ]
             ],
             [
@@ -95,14 +114,14 @@ class FullNameParserTest extends TestBase
                 ]
             ],
             [
-                "Alejandro Los Fernandez Jr.",
+                "Alejandro De Los Fernandez Jr.",
                 [
-                    "full_name" => "Alejandro Los Fernandez Jr.",
+                    "full_name" => "Alejandro De Los Fernandez Jr.",
                     "prefix"    => "",
                     "fname"     => "Alejandro",
                     "mname"     => "",
-                    "lname"     => "Los Fernandez",
-                    "suffix"    => "Jr"
+                    "lname"     => "De Los Fernandez",
+                    "suffix"    => "Jr."
                 ]
             ],
             [
@@ -128,10 +147,10 @@ class FullNameParserTest extends TestBase
                 ]
             ],
             [
-                "Erich von Stroheim",
+                "Lt. Col. Erich von Stroheim",
                 [
-                    "full_name" => "Erich von Stroheim",
-                    "prefix"    => "",
+                    "full_name" => "Lt. Col. Erich von Stroheim",
+                    "prefix"    => "Lt. Col.",
                     "fname"     => "Erich",
                     "mname"     => "",
                     "lname"     => "Von Stroheim",
@@ -190,7 +209,7 @@ class FullNameParserTest extends TestBase
                     "fname"     => "Roberta",
                     "mname"     => "R. W.",
                     "lname"     => "Kameda",
-                    "suffix"    => "II, Jr"
+                    "suffix"    => "II, Jr."
                 ]
             ],
             [
@@ -201,7 +220,7 @@ class FullNameParserTest extends TestBase
                     "fname"     => "Marc",
                     "mname"     => "Jeffrey",
                     "lname"     => "Lopez",
-                    "suffix"    => "Jr, Ph.D."
+                    "suffix"    => "Jr., Ph.D."
                 ]
             ],
             [
@@ -214,7 +233,111 @@ class FullNameParserTest extends TestBase
                     "lname" => "De La Vega",
                     "suffix" => "III"
                 ]
-            ]
+            ],
+            [
+                "Patricia J. Peña",
+                [
+                    "full_name" => "Patricia J. Peña",
+                    "prefix"    => "",
+                    "fname"     => "Patricia",
+                    "mname"     => "J.",
+                    "lname"     => "Peña",
+                    "suffix"    => ""
+                ]
+            ],
+            [
+                "Michael Richard Meng",
+                [
+                    "full_name" => "Michael Richard Meng",
+                    "prefix"    => "",
+                    "fname"     => "Michael",
+                    "mname"     => "Richard",
+                    "lname"     => "Meng",
+                    "suffix"    => ""
+                ]
+            ],
+            [
+                "Justin Michael Senior",
+                [
+                    "full_name" => "Justin Michael Senior",
+                    "prefix"    => "",
+                    "fname"     => "Justin",
+                    "mname"     => "Michael",
+                    "lname"     => "Senior",
+                    "suffix"    => ""
+                ]
+            ],
+            [
+                "Justin Michael Lopez Senior",
+                [
+                    "full_name" => "Justin Michael Lopez Senior",
+                    "prefix"    => "",
+                    "fname"     => "Justin",
+                    "mname"     => "Michael",
+                    "lname"     => "Lopez",
+                    "suffix"    => "Senior"
+                ]
+            ],
+        ];
+    }
+    public function differentDictionaryProvider()
+    {
+        return [
+            [
+                "Rev Jordan B Peck Jr.",
+                [
+                    "full_name" => "Rev Jordan B Peck Jr.",
+                    "prefix"    => "",
+                    "fname"     => "Rev",
+                    "mname"     => "Jordan B",
+                    "lname"     => "Peck",
+                    "suffix"    => "Jr."
+                ]
+            ],
+            [
+                "Maj Vasigh",
+                [
+                    "full_name" => "Maj Vasigh",
+                    "prefix"    => "",
+                    "fname"     => "Maj",
+                    "mname"     => "",
+                    "lname"     => "Vasigh",
+                    "suffix"    => ""
+                ]
+            ],
+            [
+                "Major Ryan Thompson",
+                [
+                    "full_name" => "Major Ryan Thompson",
+                    "prefix"    => "",
+                    "fname"     => "Major",
+                    "mname"     => "Ryan",
+                    "lname"     => "Thompson",
+                    "suffix"    => ""
+                ]
+            ],
+            [
+                "Da Mao",
+                [
+                    "full_name" => "Da Mao",
+                    "prefix"    => "",
+                    "fname"     => "Da",
+                    "mname"     => "",
+                    "lname"     => "Mao",
+                    "suffix"    => ""
+                ]
+            ],
+            [
+                "Mr Major Best Harding",
+                [
+                    "full_name" => "Mr Major Best Harding",
+                    "prefix"    => "Mr",
+                    "fname"     => "Major",
+                    "mname"     => "Best",
+                    "lname"     => "Harding",
+                    "suffix"    => ""
+                ]
+            ],
         ];
     }
 }
