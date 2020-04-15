@@ -43,7 +43,7 @@ class Runner
         $special_output = [];
 
         foreach ($parts as $key => $full_name) {
-            $format_name = $this->full_name_parser->parse_name($full_name);
+            $format_name = $this->full_name_parser::parse($full_name);
 
             if (!count($output)) {
                 $output[] = implode(', ', array_keys($format_name));
